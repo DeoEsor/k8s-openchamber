@@ -1,0 +1,45 @@
+{
+  "name": "k8s-openchamber",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Lens-like Kubernetes IDE for OpenChamber",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeoEsor/k8s-openchamber.git"
+  },
+  "scripts": {
+    "build": "bunx openchamber-guest-bundle panel/main.ts panel/main.js && bunx openchamber-guest-bundle --node service/main.ts service/main.js",
+    "check": "bunx tsc --noEmit && bunx openchamber-guest-check"
+  },
+  "openchamber": {
+    "apiVersion": 1,
+    "engines": {
+      "openchamber": ">=2.7.2"
+    },
+    "id": "k8s",
+    "name": "K8S",
+    "icon": "icon.svg",
+    "contributes": {
+      "panel": {
+        "entry": "panel/index.html"
+      },
+      "service": {
+        "entry": "service/main.js",
+        "runtime": "host",
+        "keepRunning": true,
+        "permissions": {
+          "exec": ["kubectl", "helm"]
+        }
+      }
+    }
+  },
+  "dependencies": {
+    "@openchamber/sdk": "2.7.2",
+    "yaml": "2.8.2"
+  },
+  "devDependencies": {
+    "@types/bun": "1.4.4",
+    "typescript": "7.0.2"
+  }
+}
